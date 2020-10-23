@@ -1,6 +1,7 @@
 package com.fang.scroll
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * @author fangkw on 2020-10-23
  **/
-class ItemFragment : Fragment() {
+class PagerItemFragment : Fragment() {
 
     private lateinit var recyclerView : RecyclerView
     private var index : Int = 0
@@ -50,8 +51,8 @@ class ItemFragment : Fragment() {
     }
 
     companion object {
-        fun getInstance(index : Int, pool : RecyclerView.RecycledViewPool?) : ItemFragment {
-            val fragment = ItemFragment()
+        fun getInstance(index : Int, pool : RecyclerView.RecycledViewPool?) : PagerItemFragment {
+            val fragment = PagerItemFragment()
             fragment.index = index
             fragment.pool = pool
             return fragment
@@ -62,7 +63,7 @@ class ItemFragment : Fragment() {
         private var inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         override fun getItemCount(): Int {
-            return 18
+            return 10
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainAdapter.NormalViewHolder {
@@ -70,8 +71,8 @@ class ItemFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: MainAdapter.NormalViewHolder, position: Int) {
-            holder.imageView.setBackgroundResource(android.R.color.holo_red_dark)
+            val color = Utils.pickOneColor(position)
+            holder.imageView.setBackgroundColor(Color.parseColor(color))
         }
-
     }
 }

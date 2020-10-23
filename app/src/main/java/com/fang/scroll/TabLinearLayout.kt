@@ -36,14 +36,10 @@ class TabLinearLayout(context: Context, recyclerView: RecyclerView) : LinearLayo
         val fragmentManager = (context as AppCompatActivity).supportFragmentManager
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         viewPager = findViewById(R.id.vp_pager)
-        tabLayout.addTab(tabLayout.newTab().setText("0"))
-        tabLayout.addTab(tabLayout.newTab().setText("1"))
-        tabLayout.addTab(tabLayout.newTab().setText("2"))
-        tabLayout.addTab(tabLayout.newTab().setText("3"))
-        tabLayout.addTab(tabLayout.newTab().setText("4"))
-        tabLayout.addTab(tabLayout.newTab().setText("5"))
-        tabLayout.addTab(tabLayout.newTab().setText("6"))
-        tabLayout.addTab(tabLayout.newTab().setText("7"))
+        tabLayout.addTab(tabLayout.newTab().setText("tab0"))
+        tabLayout.addTab(tabLayout.newTab().setText("tab1"))
+        tabLayout.addTab(tabLayout.newTab().setText("tab2"))
+        tabLayout.addTab(tabLayout.newTab().setText("tab3"))
         // TODO: fangkw 2019-06-02  setupWithViewPager 会导致轻微卡顿感
         tabLayout.setupWithViewPager(viewPager)
         viewPager?.adapter = ViewPagerAdapter(fragmentManager, homeRecyclerView.recycledViewPool)
@@ -54,11 +50,11 @@ class TabLinearLayout(context: Context, recyclerView: RecyclerView) : LinearLayo
         private val recyclerViewPool = pool
 
         override fun getItem(position: Int): Fragment {
-            return ItemFragment.getInstance(position, recyclerViewPool)
+            return PagerItemFragment.getInstance(position, recyclerViewPool)
         }
 
         override fun getCount(): Int {
-            return 8
+            return 4
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
