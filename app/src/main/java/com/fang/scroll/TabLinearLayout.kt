@@ -2,12 +2,14 @@ package com.fang.scroll
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -17,14 +19,17 @@ import com.google.android.material.tabs.TabLayout
  * @author fangkw on 2020-10-23
  **/
 @SuppressLint("ViewConstructor")
-class TabLinearLayout(context: Context, recyclerView: RecyclerView) : LinearLayout(context) {
+class TabLinearLayout(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
-    private var homeRecyclerView = recyclerView
     private var viewPager : ViewPager? = null
     val innerRecyclerView : InnerRecyclerView?
         get() {
             return viewPager?.findViewWithTag("inner_${viewPager?.currentItem}")
         }
+
+    private val viewModel by lazy {
+        ViewModelProvider(context as AppCompatActivity)[MainViewModel::class.java]
+    }
 
     init {
         orientation = VERTICAL
@@ -40,14 +45,11 @@ class TabLinearLayout(context: Context, recyclerView: RecyclerView) : LinearLayo
         tabLayout.addTab(tabLayout.newTab().setText("tab1"))
         tabLayout.addTab(tabLayout.newTab().setText("tab2"))
         tabLayout.addTab(tabLayout.newTab().setText("tab3"))
-        // TODO: fangkw 2019-06-02  setupWithViewPager 会导致轻微卡顿感
         tabLayout.setupWithViewPager(viewPager)
-        viewPager?.adapter = ViewPagerAdapter(fragmentManager, homeRecyclerView.recycledViewPool)
+        viewPager?.adapter = ViewPagerAdapter(fragmentManager, viewModel.recyclerViewPool)
     }
 
-    class ViewPagerAdapter(fragmentManager: FragmentManager, pool : RecyclerView.RecycledViewPool?) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-        private val recyclerViewPool = pool
+    class ViewPagerAdapter(fragmentManager: FragmentManager, private val recyclerViewPool: RecyclerView.RecycledViewPool) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             return PagerItemFragment.getInstance(position, recyclerViewPool)
@@ -58,7 +60,7 @@ class TabLinearLayout(context: Context, recyclerView: RecyclerView) : LinearLayo
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return position.toString()
+            return "tab$position"
         }
     }
 }

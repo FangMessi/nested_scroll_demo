@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * @author fangkw on 2020-10-23
  **/
-class MainAdapter(context: Context, recyclerView: RecyclerView) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter(context: Context) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-    private val homeRecyclerView = recyclerView
     private var inflater : LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private var tabLinearLayout = TabLinearLayout(context, homeRecyclerView)
 
     override fun getItemCount(): Int {
         return ITEM_COUNT
@@ -34,7 +32,7 @@ class MainAdapter(context: Context, recyclerView: RecyclerView) : RecyclerView.A
         return if (viewType == TYPE_ITEM_NORMAL) {
             NormalViewHolder(inflater.inflate(R.layout.list_item_normal, parent, false))
         } else {
-            TabViewHolder(inflater.inflate(R.layout.item_list_tab, parent, false), parent, tabLinearLayout)
+            TabViewHolder(inflater.inflate(R.layout.item_list_tab, parent, false), parent)
         }
     }
 
@@ -60,10 +58,8 @@ class MainAdapter(context: Context, recyclerView: RecyclerView) : RecyclerView.A
         }
     }
 
-    class TabViewHolder(view: View, parent: ViewGroup, tabLinearLayout: TabLinearLayout) : MainAdapter.MainViewHolder(view) {
+    class TabViewHolder(view: View, parent: ViewGroup) : MainAdapter.MainViewHolder(view) {
         private val _parent = parent
-        private val _linearLayout = tabLinearLayout
-        private val frameLayout = view.findViewById<FrameLayout>(R.id.fl_container)
         private var ns = false
 
         override fun bindView(item: String) {
@@ -72,8 +68,6 @@ class MainAdapter(context: Context, recyclerView: RecyclerView) : RecyclerView.A
                 return
             }
             ns = true
-            val lp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, _parent.height)
-            frameLayout.addView(_linearLayout, lp)
         }
     }
 

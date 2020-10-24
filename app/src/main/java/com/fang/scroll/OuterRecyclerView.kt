@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Interpolator
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.OverScroller
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -142,11 +143,8 @@ class OuterRecyclerView(context: Context, attributeSet: AttributeSet) : Recycler
 
     private fun fetchNestedChild() : View? {
         val view = getChildAt(childCount-1)
-        if (view is FrameLayout) {
-            val linearLayout = view.getChildAt(0)
-            if (linearLayout is TabLinearLayout) {
-                return linearLayout.innerRecyclerView
-            }
+        if (view is TabLinearLayout) {
+            return view.innerRecyclerView
         }
         return null
     }

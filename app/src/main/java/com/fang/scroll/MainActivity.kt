@@ -1,17 +1,18 @@
 package com.fang.scroll
 
-import android.graphics.Rect
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +23,8 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
-            setRecycledViewPool(RecyclerView.RecycledViewPool())
-            adapter = MainAdapter(this@MainActivity, this)
+            setRecycledViewPool(viewModel.recyclerViewPool)
+            adapter = MainAdapter(this@MainActivity)
         }
     }
 
