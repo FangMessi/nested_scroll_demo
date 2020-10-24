@@ -32,7 +32,7 @@ class MainAdapter(context: Context) : RecyclerView.Adapter<MainAdapter.MainViewH
         return if (viewType == TYPE_ITEM_NORMAL) {
             NormalViewHolder(inflater.inflate(R.layout.list_item_normal, parent, false))
         } else {
-            TabViewHolder(inflater.inflate(R.layout.item_list_tab, parent, false), parent)
+            TabViewHolder(inflater.inflate(R.layout.item_list_tab, parent, false))
         }
     }
 
@@ -58,18 +58,7 @@ class MainAdapter(context: Context) : RecyclerView.Adapter<MainAdapter.MainViewH
         }
     }
 
-    class TabViewHolder(view: View, parent: ViewGroup) : MainAdapter.MainViewHolder(view) {
-        private val _parent = parent
-        private var ns = false
-
-        override fun bindView(item: String) {
-            super.bindView(item)
-            if (ns) {
-                return
-            }
-            ns = true
-        }
-    }
+    class TabViewHolder(view: View) : MainAdapter.MainViewHolder(view)
 
     companion object {
         const val ITEM_COUNT = 10
