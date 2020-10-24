@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,17 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             setRecycledViewPool(viewModel.recyclerViewPool)
             adapter = MainAdapter(this@MainActivity)
+
+            bindScrollListener(this)
+        }
+    }
+
+    private fun bindScrollListener(recyclerView: RecyclerView) {
+        PagedListFetcher(recyclerView = recyclerView, lifecycleOwner = this) { page, moreCallback ->
+            if (page == 1) {
+                (recyclerView.adapter as? MainAdapter)?.loadTabData(lifecycleScope)
+                moreCallback.invoke(false)
+            }
         }
     }
 

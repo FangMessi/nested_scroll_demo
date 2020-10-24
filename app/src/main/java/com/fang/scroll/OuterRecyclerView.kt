@@ -5,9 +5,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.Interpolator
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.OverScroller
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +16,11 @@ class OuterRecyclerView(context: Context, attributeSet: AttributeSet) : Recycler
 
     private val mParentScrollConsumed = IntArray(2)
 
-
     private var mCurrentFling = 0
-    private val overScroller = OverScroller(context, Interpolator {
+    private val overScroller = OverScroller(context) {
         val t = it - 1.0f
         t * t * t * t * t + 1.0f
-    })
+    }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.actionMasked == MotionEvent.ACTION_CANCEL) {
@@ -57,9 +53,7 @@ class OuterRecyclerView(context: Context, attributeSet: AttributeSet) : Recycler
      * mFirstTouchTarget != null 的意思是 有child可以处理事件
      * */
     override fun onInterceptTouchEvent(e: MotionEvent?): Boolean {
-        val ns = super.onInterceptTouchEvent(e)
-        Log.e("fang", "onInterceptTouchEvent-->$ns")
-        return ns
+        return super.onInterceptTouchEvent(e)
     }
 
     /**
