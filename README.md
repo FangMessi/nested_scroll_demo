@@ -9,6 +9,9 @@
 ## 效果展示
 ![](https://github.com/FangMessi/nested_scroll_demo/blob/main/screenshot/ajqoe-vk8xu.gif)
 
+## 页面结构
+![](https://github.com/FangMessi/nested_scroll_demo/blob/main/screenshot/structure.png)
+
 ## 核心技术
 嵌套滚动，NestedScrollChild&NestedScrollParent
 
