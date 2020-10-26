@@ -1,6 +1,10 @@
 # nested_scroll_demo
+
 ## 项目介绍  
-仿淘宝、京东首页tab悬停效果
+```
+仿京东、淘宝首页，通过两层嵌套的RecyclerView实现tab的吸顶效果   
+```
+[更多详情](https://juejin.im/post/6887822836188643335)
 
 ## 效果展示
 ![](https://github.com/FangMessi/nested_scroll_demo/blob/main/screenshot/ajqoe-vk8xu.gif)
